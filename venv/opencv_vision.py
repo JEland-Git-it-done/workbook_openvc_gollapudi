@@ -1,9 +1,9 @@
-import numpy as np; import pandas as pd
+import numpy as np; import pandas as pd;
 import cv2 as opencv
-import urllib
+import urllib; from matplotlib import pyplot as plt
 
 print(opencv.__version__)
-
+panda_src = 'C:/Users/jedel/Pictures/Saved Pictures/1280px-Panda_Cub_from_Wolong,_Sichuan,_China.png'
 def test_numpy_matrix():
     newlst = [1,2,3]
     newarr = np.array(newlst)
@@ -12,8 +12,8 @@ def test_numpy_matrix():
     print(g)
 
 def show_panda():
-    src = 'C:/Users/jedel/Pictures/Saved Pictures/1280px-Panda_Cub_from_Wolong,_Sichuan,_China.png'
-    panda_img = opencv.imread(src)
+
+    panda_img = opencv.imread(panda_src)
     print(panda_img)
     panda_gray_img = opencv.cvtColor(panda_img,
                      opencv.COLOR_BGR2GRAY)
@@ -23,4 +23,19 @@ def show_panda():
     opencv.waitKey(0)
     opencv.destroyAllWindows()
 
-show_panda()
+def histogram_panda():
+    src = panda_src
+    panda_img = opencv.imread(src)
+    histogram = opencv.calcHist([panda_img], [0],
+                                None, [256], [0,256])
+    plt.hist(histogram.ravel(), 256, [0,256])
+    plt.show()
+    color = ["b", "g", "r"]
+    for i, col in enumerate(color):
+        hist = opencv.calcHist([panda_img], [i],
+                               None, [256], [0, 256])
+        plt.plot(hist, color = col)
+        plt.xlim([0,256])
+    plt.show()
+
+histogram_panda()
