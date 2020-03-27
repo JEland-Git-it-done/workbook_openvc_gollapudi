@@ -35,7 +35,33 @@ def histogram_panda():
         hist = opencv.calcHist([panda_img], [i],
                                None, [256], [0, 256])
         plt.plot(hist, color = col)
-        plt.xlim([0,256])
+        plt.xlim([0,256]) #min-maximum x-value
     plt.show()
 
-histogram_panda()
+def webcam_test():
+    cap = opencv.VideoCapture(0)
+
+    while True:
+        ret, frame = cap.read()
+        opencv.imshow("frame", frame)
+        key = opencv.waitKey(1)
+        if key == 27:
+            break
+
+    cap.release()
+    opencv.destroyAllWindows()
+
+def load_video():
+    file = r"C:\Users\jedel\Videos\Escape From Tarkov\Escape From Tarkov 2019.11.29 - 11.12.24.08.DVR.1575022790461.mp4"
+    video = opencv.VideoCapture(file)
+    while True:
+        ret, frame = video.read()
+        opencv.imshow("Escape From Tarkov 2019.11.29 - 11.12.24.08.DVR.1575022790461.mp4", frame)
+
+        key = opencv.waitKey(25)
+        if key == 27:
+            break
+    video.release()
+    opencv.destroyAllWindows()
+    print("ALL GOOD")
+load_video()
