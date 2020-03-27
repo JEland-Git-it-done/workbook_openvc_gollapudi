@@ -64,4 +64,31 @@ def load_video():
     video.release()
     opencv.destroyAllWindows()
     print("ALL GOOD")
-load_video()
+
+def load_and_write_video():
+
+    file = opencv.VideoCapture(r"C:/Users/jedel/Videos/Escape From Tarkov/Escape From Tarkov 2019.11.29 - 11.12.24.08.DVR.1575022790461.mp4")
+    fcc = opencv.VideoWriter_fourcc(*"XVID")
+    out = opencv.VideoWriter("new_tark.avi", fcc, 28, (640, 360))
+    print("Working")
+    while True:
+        ret, f = file.read()
+        f2 = opencv.flip(f, 1)
+        if not ret:
+            break
+        opencv.imshow("frame2", f2)
+        opencv.imshow("frame", f)
+        print("Working in loop")
+        out.write(f2)
+        print("Writing")
+
+        if opencv.waitKey(20) & 0xFF == ord('q'):
+            print("Getting to key")
+            break
+
+    out.release()
+    file.release()
+    opencv.destroyAllWindows()
+
+
+load_and_write_video()
