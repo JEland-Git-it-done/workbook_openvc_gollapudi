@@ -90,5 +90,19 @@ def load_and_write_video():
     file.release()
     opencv.destroyAllWindows()
 
+def manipulating_pixels():
+    panda = opencv.imread(panda_src)
+    pixel = panda[200,250]
+    print(pixel)
+    panda[200,250]=(255,0,0) #variable is assigning colour
+    #Using RBG scale
+    panda[200:250, 200:350] = (0,255,0)
+    print(type(panda), "all fine")
+    opencv.imshow("modified pixel", panda)
+    opencv.waitKey(0)
+    #could save output photo, code attached below
+    opencv.imwrite("green_pixel_panda.png", panda)
 
-load_and_write_video()
+
+
+manipulating_pixels()
