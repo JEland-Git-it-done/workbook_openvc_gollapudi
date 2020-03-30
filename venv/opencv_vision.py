@@ -103,6 +103,17 @@ def manipulating_pixels():
     #could save output photo, code attached below
     opencv.imwrite("green_pixel_panda.png", panda)
 
+def drawing_shapes():
+    panda = opencv.imread(panda_src)
+    opencv.line(panda, (25,21), (100, 100), (255,0,0), 5)
+    opencv.rectangle(panda, (25,21), (200,200), (0, 255,0),2)
+    opencv.circle(panda, (50,50), 50, (0,0,255), -1)
+
+    opencv.imshow("Geomety", panda)
+    opencv.waitKey(0)
+
+def translate_image():
+    panda = opencv.imread(panda_src)
 
 
-manipulating_pixels()
+drawing_shapes()
