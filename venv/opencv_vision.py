@@ -1,4 +1,4 @@
-import numpy as np; import pandas as pd;
+import numpy as np; import pandas as pd; import random
 import cv2 as opencv
 import urllib; from matplotlib import pyplot as plt
 
@@ -114,6 +114,33 @@ def drawing_shapes():
 
 def translate_image():
     panda = opencv.imread(panda_src)
+    num_rows, num_cols = panda.shape[:2]
+    trans_matrix = np.float32([ [1,0,70], [0,1,110] ])
+    img_translation = opencv.warpAffine(panda, trans_matrix,
+                                        (num_cols, num_rows))
+    opencv.imshow("Translation", img_translation)
+    opencv.waitKey()
+
+def rotate_image():
+    panda = opencv.imread(panda_src)
+    angle = []
+    for i in range(3):
+        num = random.randint(0,360)
+        angle.append(float(num))
+    print(type(angle))
+    num_rows, num_cols = panda.shape[:2]
+    translation_matrix = np.float32(
+        [[1,0,int(0.5*num_cols)],
+        [0,1,int(0.5*num_rows)],
+        [2 * num_cols, 2 * num_rows]]
+    )
+    rotation_matrix = opencv.getRotationMatrix2D((tuple(num_cols), tuple(num_rows)),
+    img_translation = opencv.warpAffine(panda, translation_matrix, (1),
+    img_rotation = opencv.warpAffine(img_translation, rotation_matrix,
+                                     (2*num_cols, 2*num_rows))))
+    opencv.imshow("rotation", img_rotation)
+    opencv.waitKey(0)
 
 
-drawing_shapes()
+
+rotate_image()
