@@ -129,18 +129,27 @@ def rotate_image():
         angle.append(float(num))
     print(type(angle))
     num_rows, num_cols = panda.shape[:2]
-    translation_matrix = np.float32(
-        [[1,0,int(0.5*num_cols)],
-        [0,1,int(0.5*num_rows)],
-        [2 * num_cols, 2 * num_rows]]
-    )
-    rotation_matrix = opencv.getRotationMatrix2D((tuple(num_cols), tuple(num_rows)),
-    img_translation = opencv.warpAffine(panda, translation_matrix, (1),
-    img_rotation = opencv.warpAffine(img_translation, rotation_matrix,
-                                     (2*num_cols, 2*num_rows))))
+
+
+    translation_matrix = np.float32([[1, 0, int(0.5 * num_cols)], [0, 1, int(0.5 * num_rows)]])
+    2 * num_cols, 2 * num_rows
+    rotation_matrix = cv2.getRotationMatrix2D((num_cols, num_rows), 30,
+                                              img_translation=cv2.warpAffine(img, translation_matrix, (1)))
+    img_rotation = cv2.warpAffine(img_translation, rotation_matrix, (2 * num_cols, 2 * num_rows))
     opencv.imshow("rotation", img_rotation)
     opencv.waitKey(0)
 
+def image_scaling():
+    panda = opencv.imread(panda_src)
+    img_scl = opencv.resize(panda, None, fx=1.2, fy=1.2,
+                            interpolation = opencv.INTER_LINEAR)
+    opencv.imshow("Scaling - Linear Interpolation", img_scl)
+    img_scl = opencv.resize(panda, None, fx=1.2, fy=1.2,
+                            interpolation=opencv.INTER_CUBIC)
+    opencv.imshow("Scaling - Cubic Interpolation", img_scl)
+    img_scl = opencv.resize(panda, (450, 400), interpolation=
+                            opencv.INTER_AREA)
+    opencv.imshow("Scaling - Skewed Size", img_scl)
+    opencv.waitKey(0)
 
-
-rotate_image()
+image_scaling()
