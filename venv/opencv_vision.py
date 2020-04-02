@@ -147,9 +147,28 @@ def image_scaling():
     img_scl = opencv.resize(panda, None, fx=1.2, fy=1.2,
                             interpolation=opencv.INTER_CUBIC)
     opencv.imshow("Scaling - Cubic Interpolation", img_scl)
+    #Cubic upscaling seems to be the most effective
     img_scl = opencv.resize(panda, (450, 400), interpolation=
                             opencv.INTER_AREA)
     opencv.imshow("Scaling - Skewed Size", img_scl)
     opencv.waitKey(0)
 
-image_scaling()
+def edge_detection():
+    frame = opencv.imread(panda_src)
+
+    hsv_colour = opencv.cvtColor(frame, opencv.COLOR_BGR2HSV)
+    low_red = np.array([30,150,50]) #Sets respective numbers of RGB
+    upp_red = np.array([255,255,180])
+
+    mask = opencv.inRange(hsv_colour, low_red, upp_red)
+    resolution = opencv.bitwise_and(frame, frame, mask=mask)
+
+    opencv.imshow("Original", frame)
+    edges = opencv.Canny(frame, 100, 200)
+    opencv.imshow("Edges", edges)
+
+    k = opencv.waitKey(0)
+    #Doesnt work particularily well with a black and white image
+
+
+edge_detection()
